@@ -1,0 +1,733 @@
+/* ========================================
+   LORD OF MYSTERIES - PERSONAJES
+   Estilo: Misticismo Victoriano Oscuro
+   ======================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+/* ========================================
+   VARIABLES Y RESET
+   ======================================== */
+
+:root {
+    --midnight-blue: #0B0E14;
+    --antique-silver: #D1D5DB;
+    --crimson-moon: #9B2226;
+    --old-gold: #C5A059;
+    --deep-shadow: #050608;
+    --card-bg: rgba(16, 20, 28, 0.92);
+    --border-subtle: rgba(197, 160, 89, 0.2);
+    --border-hover: rgba(197, 160, 89, 0.7);
+    --mist: rgba(209, 213, 219, 0.08);
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   BODY - EL COSMOS ETERNO
+   ======================================== */
+
+body {
+    font-family: 'EB Garamond', serif;
+    background-color: var(--midnight-blue);
+    color: var(--antique-silver);
+    min-height: 100vh;
+    background-image:
+        radial-gradient(ellipse at 15% 85%, rgba(155, 34, 38, 0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 15%, rgba(197, 160, 89, 0.05) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, rgba(20, 24, 40, 0.4) 0%, transparent 80%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D1D5DB' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg,
+        rgba(11, 14, 20, 0.6) 0%,
+        rgba(11, 14, 20, 0.85) 50%,
+        rgba(11, 14, 20, 0.95) 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ========================================
+   ESTRELLAS DE FONDO
+   ======================================== */
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        radial-gradient(1px 1px at 15% 25%, rgba(197,160,89,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 75%, rgba(209,213,219,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 40%, rgba(197,160,89,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 60%, rgba(209,213,219,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 15%, rgba(197,160,89,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 55%, rgba(209,213,219,0.2) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+
+header {
+    text-align: center;
+    margin-bottom: 5rem;
+    padding: 4rem 0 3rem;
+    position: relative;
+}
+
+.header-symbol {
+    font-size: 2.5rem;
+    color: var(--old-gold);
+    opacity: 0.7;
+    margin-bottom: 1.5rem;
+    display: block;
+    animation: pulse-glow 3s ease-in-out infinite;
+    letter-spacing: 0.5rem;
+}
+
+.nav-back {
+    position: absolute;
+    top: 3rem;
+    left: 0;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--old-gold);
+    text-decoration: none;
+    letter-spacing: 0.15rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-back:hover { opacity: 1; }
+.nav-back::before { content: '←'; font-size: 1rem; }
+
+.title-main {
+    font-family: 'Cinzel', serif;
+    font-size: 3.8rem;
+    font-weight: 700;
+    color: var(--antique-silver);
+    letter-spacing: 0.4rem;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 30px rgba(197, 160, 89, 0.4),
+        0 0 60px rgba(197, 160, 89, 0.1);
+    animation: title-appear 1.5s ease-out;
+}
+
+.title-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.title-divider-line {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--old-gold), transparent);
+    opacity: 0.6;
+}
+
+.title-divider-gem {
+    font-size: 1rem;
+    color: var(--crimson-moon);
+    opacity: 0.8;
+}
+
+.subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--old-gold);
+    letter-spacing: 0.08rem;
+    opacity: 0.85;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ========================================
+   SECCIÓN TITLE (Principales / Secundarios)
+   ======================================== */
+
+.section {
+    margin-bottom: 5rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+.section-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--crimson-moon), transparent);
+    opacity: 0.5;
+}
+
+.section-roman {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: var(--crimson-moon);
+    letter-spacing: 0.4rem;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    opacity: 0.8;
+}
+
+.section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--antique-silver);
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::before,
+.section-title::after {
+    content: ' ✦ ';
+    color: var(--old-gold);
+    font-size: 1rem;
+    opacity: 0.6;
+    vertical-align: middle;
+}
+
+/* ========================================
+   TARJETA DE PERSONAJE
+   ======================================== */
+
+.character-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.character-card {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: linear-gradient(135deg,
+        rgba(16, 20, 28, 0.95) 0%,
+        rgba(22, 27, 38, 0.9) 100%);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(197, 160, 89, 0.08);
+}
+
+.character-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--crimson-moon), var(--old-gold));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.character-card:hover {
+    transform: translateX(6px);
+    border-color: var(--border-hover);
+    box-shadow:
+        0 8px 40px rgba(197, 160, 89, 0.15),
+        0 0 60px rgba(155, 34, 38, 0.08),
+        inset 0 1px 0 rgba(197, 160, 89, 0.15);
+}
+
+.character-card:hover::before { opacity: 1; }
+
+/* ========================================
+   IMAGEN DEL PERSONAJE
+   ======================================== */
+
+.character-img-wrap {
+    width: 160px;
+    min-width: 160px;
+    height: 160px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.character-img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+        transparent 60%,
+        rgba(16, 20, 28, 0.8) 100%);
+    pointer-events: none;
+}
+
+.character-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    filter: sepia(0.2) contrast(1.05);
+    transition: transform 0.5s ease, filter 0.4s ease;
+}
+
+.character-card:hover .character-img {
+    transform: scale(1.05);
+    filter: sepia(0.1) contrast(1.1);
+}
+
+/* Placeholder cuando no hay imagen */
+.character-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(30, 20, 10, 0.95), rgba(50, 20, 20, 0.6));
+    position: relative;
+}
+
+.character-img-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 50% 40%, rgba(197,160,89,0.1) 0%, transparent 60%);
+}
+
+.placeholder-initial {
+    font-family: 'Cinzel', serif;
+    font-size: 4rem;
+    color: var(--old-gold);
+    opacity: 0.5;
+    position: relative;
+    z-index: 1;
+}
+
+/* ========================================
+   INFO DEL PERSONAJE
+   ======================================== */
+
+.character-info {
+    padding: 1.8rem 2rem 1.8rem 2rem;
+    flex: 1;
+    position: relative;
+}
+
+.character-tarot {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--crimson-moon);
+    letter-spacing: 0.25rem;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    opacity: 0.9;
+}
+
+.character-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--antique-silver);
+    margin-bottom: 0.2rem;
+    transition: color 0.3s ease;
+    line-height: 1.2;
+}
+
+.character-card:hover .character-name { color: var(--old-gold); }
+
+.character-alias {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--old-gold);
+    opacity: 0.8;
+    margin-bottom: 0.8rem;
+}
+
+.character-separator {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--crimson-moon), transparent);
+    margin-bottom: 0.9rem;
+    opacity: 0.7;
+    transition: width 0.4s ease;
+}
+
+.character-card:hover .character-separator { width: 100px; }
+
+.character-desc {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: rgba(209, 213, 219, 0.78);
+    font-style: italic;
+    max-width: 720px;
+}
+
+.character-pathway {
+    margin-top: 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    color: rgba(197, 160, 89, 0.6);
+    letter-spacing: 0.15rem;
+    text-transform: uppercase;
+}
+
+.character-arrow {
+    margin-left: auto;
+    padding: 0 2rem;
+    font-size: 1.5rem;
+    color: var(--old-gold);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.character-card:hover .character-arrow {
+    opacity: 0.6;
+    transform: translateX(4px);
+}
+
+/* ========================================
+   PÁGINA INDIVIDUAL DE PERSONAJE
+   ======================================== */
+
+.character-page {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.char-hero {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+    margin-bottom: 3.5rem;
+    padding: 2.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.char-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 4px;
+    background: linear-gradient(90deg, var(--crimson-moon), var(--old-gold), var(--crimson-moon));
+    opacity: 0.7;
+}
+
+.char-portrait {
+    width: 220px;
+    min-width: 220px;
+    height: 300px;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.7);
+}
+
+.char-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    filter: sepia(0.15) contrast(1.05);
+}
+
+.char-portrait-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(30,20,10,0.95), rgba(50,20,20,0.6));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.char-portrait-placeholder .initial {
+    font-family: 'Cinzel', serif;
+    font-size: 6rem;
+    color: var(--old-gold);
+    opacity: 0.4;
+}
+
+.char-meta {
+    flex: 1;
+}
+
+.char-section-badge {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--crimson-moon);
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.char-full-name {
+    font-family: 'Cinzel', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--antique-silver);
+    line-height: 1.2;
+    margin-bottom: 0.3rem;
+    text-shadow: 0 0 30px rgba(197,160,89,0.2);
+}
+
+.char-tarot-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--old-gold);
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+}
+
+.char-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.char-stat {
+    border-left: 2px solid rgba(197,160,89,0.3);
+    padding-left: 0.8rem;
+}
+
+.char-stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: rgba(197,160,89,0.6);
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+}
+
+.char-stat-value {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    color: var(--antique-silver);
+}
+
+.char-intro {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(209,213,219,0.85);
+    font-style: italic;
+    border-left: 2px solid var(--crimson-moon);
+    padding-left: 1rem;
+}
+
+.char-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.char-block {
+    background: var(--card-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 2rem;
+    position: relative;
+}
+
+.char-block-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--old-gold);
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid rgba(197,160,89,0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.char-block-title::before {
+    content: '◈';
+    font-size: 0.8rem;
+    color: var(--crimson-moon);
+}
+
+.char-block p {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: rgba(209,213,219,0.82);
+    margin-bottom: 0.8rem;
+}
+
+.char-block p:last-child { margin-bottom: 0; }
+
+.char-block-quote {
+    margin: 1.2rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 3px solid var(--crimson-moon);
+    background: rgba(155,34,38,0.06);
+    border-radius: 0 4px 4px 0;
+}
+
+.char-block-quote p {
+    font-style: italic;
+    color: rgba(209,213,219,0.9);
+    margin: 0;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+footer {
+    text-align: center;
+    margin-top: 6rem;
+    padding: 3rem 0 2rem;
+    border-top: 1px solid rgba(197, 160, 89, 0.15);
+    position: relative;
+}
+
+footer::before {
+    content: '◇ ✦ ◇';
+    position: absolute;
+    top: -0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--midnight-blue);
+    padding: 0 2rem;
+    color: var(--old-gold);
+    opacity: 0.5;
+    letter-spacing: 1rem;
+    font-size: 0.9rem;
+}
+
+.footer-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--antique-silver);
+    opacity: 0.6;
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+
+.footer-author {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    color: var(--crimson-moon);
+    letter-spacing: 0.2rem;
+    opacity: 0.7;
+}
+
+/* ========================================
+   ANIMACIONES
+   ======================================== */
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.6; text-shadow: 0 0 10px rgba(197,160,89,0.3); }
+    50% { opacity: 1; text-shadow: 0 0 25px rgba(197,160,89,0.7); }
+}
+
+@keyframes title-appear {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes card-appear {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.character-card {
+    animation: card-appear 0.5s ease-out both;
+}
+
+.character-card:nth-child(1) { animation-delay: 0.05s; }
+.character-card:nth-child(2) { animation-delay: 0.12s; }
+.character-card:nth-child(3) { animation-delay: 0.19s; }
+.character-card:nth-child(4) { animation-delay: 0.26s; }
+.character-card:nth-child(5) { animation-delay: 0.33s; }
+.character-card:nth-child(6) { animation-delay: 0.40s; }
+.character-card:nth-child(7) { animation-delay: 0.47s; }
+.character-card:nth-child(8) { animation-delay: 0.54s; }
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .title-main { font-size: 2.4rem; letter-spacing: 0.2rem; }
+
+    .character-card { flex-direction: column; }
+    .character-img-wrap { width: 100%; min-width: unset; height: 200px; }
+    .character-img-wrap::after {
+        background: linear-gradient(180deg, transparent 60%, rgba(16,20,28,0.9) 100%);
+    }
+    .character-arrow { display: none; }
+    .character-info { padding: 1.2rem 1.5rem; }
+
+    .char-hero { flex-direction: column; padding: 1.5rem; gap: 1.5rem; }
+    .char-portrait { width: 100%; min-width: unset; height: 250px; }
+    .char-full-name { font-size: 2rem; }
+    .char-stats { grid-template-columns: 1fr; }
+    .char-block { padding: 1.5rem; }
+}
+
+@media (max-width: 480px) {
+    .title-main { font-size: 1.8rem; }
+    .section-title { font-size: 1.6rem; }
+    .character-name { font-size: 1.4rem; }
+    .container { padding: 2rem 1rem 4rem; }
+}
