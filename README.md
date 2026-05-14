@@ -30,16 +30,26 @@ Biblioteca web personal con estilo **Misticismo Victoriano** inspirada en la nov
 ```
 Biblioteca_Lord_Of_Mysteries/
 │
-├── index.html              # Página principal (índice de libros)
+├── index.html              # Biblioteca general de novelas
+├── lord-of-mysteries.html  # Vista inmersiva de Lord of Mysteries
+├── lord-of-mysteries-volumenes.html # Biblioteca de volúmenes de Lord of Mysteries
 │
 ├── CSS/
 │   ├── style.css          # Estilos para la página principal
 │   └── libros.css         # Estilos para páginas de libros
 │
 ├── libros/
-│   ├── Primero.html       # Volumen I - El Misterio Comienza
-│   ├── Segundo.html       # Volumen II - El Ascenso del Fool
-│   └── Tercero.html       # Volumen III - La Danza del Caos
+│   ├── Primero.html       # Volumen I - Payaso, Parte I
+│   ├── Segundo.html       # Volumen II - Payaso, Parte II
+│   ├── Tercero.html       # Volumen III - Payaso, Parte III
+│   ├── Lector.html        # Lector reutilizable para Volumen IV en adelante
+│   └── pdfs/              # PDFs locales de los volúmenes
+│
+├── JS/
+│   ├── book-data.js       # Catálogo de PDFs y volúmenes
+│   ├── book-loader.js     # Carga dinámica del lector
+│   ├── book-viewer.js     # Visor PDF local
+│   └── library-catalog.js # Tarjetas dinámicas de la biblioteca
 │
 ├── imagenes/              # Carpeta para imágenes adicionales
 │
@@ -50,8 +60,9 @@ Biblioteca_Lord_Of_Mysteries/
 
 ### Opción 1: Uso Local
 1. Descarga toda la carpeta `Biblioteca_Lord_Of_Mysteries`
-2. Abre `index.html` en tu navegador web favorito
-3. Navega entre los libros usando los enlaces
+2. Ejecuta `node dev-server.mjs 8087`
+3. Abre `http://localhost:8087` en tu navegador web favorito
+4. Navega entre los libros usando los enlaces
 
 ### Opción 2: Subir a Hosting Web
 1. Sube todos los archivos manteniendo la estructura de carpetas
@@ -60,19 +71,19 @@ Biblioteca_Lord_Of_Mysteries/
 
 ## 📖 Contenido
 
-### Volumen I: El Misterio Comienza
-Klein Moretti despierta en un mundo de misterios y secretos antiguos en las brumosas calles de Tingen.
+### Biblioteca general
+La vista inicial lista las novelas disponibles. Actualmente incluye Lord of Mysteries y espacios preparados para futuras novelas.
 
-### Volumen II: El Ascenso del Fool
-Las conspiraciones de Backlund se revelan mientras Klein navega entre múltiples identidades.
+### Lord of Mysteries
+La novela tiene una vista propia con ambientación musical, expedientes y una biblioteca de volúmenes locales.
 
-### Volumen III: La Danza del Caos
-El juego final de los Dioses comienza bajo la Luna Carmesí.
+### Volumen III en adelante
+La biblioteca continúa con lectores locales por rangos de capítulos, desde `151-200` hasta `1401-1430`.
 
 ## 🎯 Características Técnicas
 
 - **Responsive Design**: Se adapta a móviles, tabletas y escritorio
-- **Sin JavaScript**: HTML y CSS puros para máxima compatibilidad
+- **Visor local**: PDF.js para leer los volúmenes sin depender de Heyzine
 - **Rendimiento Optimizado**: Carga rápida y suave
 - **Accesibilidad**: Diseño semántico y legible
 - **Cross-browser**: Compatible con todos los navegadores modernos
@@ -92,20 +103,19 @@ Edita las variables CSS en `CSS/style.css` y `CSS/libros.css`:
 ```
 
 ### Agregar Más Libros
-1. Duplica uno de los archivos en `libros/`
-2. Cambia la URL del iframe
-3. Actualiza el título y descripción
-4. Añade una nueva tarjeta en `index.html`
+1. Copia el PDF en `libros/pdfs/`
+2. Añade una entrada en `JS/book-data.js`
+3. La tarjeta aparecerá automáticamente en la biblioteca
 
 ### Modificar Textos
-- **Títulos y descripciones**: Edita `index.html`
-- **Información de libros**: Edita cada archivo en `libros/`
+- **Novelas principales**: Edita `index.html`
+- **Volúmenes de Lord of Mysteries**: Edita `JS/book-data.js`
 
 ## 💡 Notas
 
-- Los libros se muestran mediante iframes de Heyzine (servicio de flipbooks)
-- Las URLs de los iframes están configuradas para los tres volúmenes
-- La biblioteca mantiene su estilo incluso sin conexión a internet (excepto los iframes)
+- Los volúmenes usan un visor PDF local con PDF.js, sin iframes de Heyzine
+- Los PDFs están guardados en `libros/pdfs/`
+- La biblioteca mantiene su estilo incluso sin conexión a internet si los recursos externos de fuentes ya están disponibles
 - Las fuentes se cargan desde Google Fonts (requiere conexión inicial)
 
 ## 🌙 Temática

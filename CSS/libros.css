@@ -249,6 +249,410 @@ body::before {
 }
 
 /* ========================================
+   VISOR PDF LOCAL - LIBRO
+   ======================================== */
+
+.book-viewer {
+    padding: 1rem;
+    overflow: visible;
+}
+
+.book-toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.18);
+    background: rgba(5, 6, 8, 0.72);
+}
+
+.book-button {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid rgba(197, 160, 89, 0.65);
+    border-radius: 4px;
+    background: rgba(11, 14, 20, 0.9);
+    color: var(--old-gold);
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    line-height: 1;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.book-button:hover:not(:disabled),
+.book-button:focus-visible:not(:disabled) {
+    background: var(--old-gold);
+    color: var(--midnight-blue);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.book-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
+}
+
+.book-page-jump,
+.book-zoom {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.book-page-jump {
+    color: var(--antique-silver);
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.08rem;
+}
+
+.book-page-jump input {
+    width: 4.5rem;
+    height: 2.35rem;
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    border-radius: 4px;
+    background: rgba(209, 213, 219, 0.08);
+    color: var(--antique-silver);
+    font-family: 'Cinzel', serif;
+    text-align: center;
+}
+
+.book-stage {
+    position: relative;
+    min-height: 520px;
+    padding: 2.6rem 3.6rem 1.5rem;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 50% 28%, rgba(197, 160, 89, 0.14), transparent 42%),
+        linear-gradient(135deg, rgba(5, 6, 8, 0.98), rgba(20, 24, 32, 0.96));
+}
+
+.book-stage::before {
+    content: '';
+    position: absolute;
+    right: 2.35rem;
+    bottom: 3.4rem;
+    left: 2.35rem;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.68);
+    filter: blur(18px);
+    pointer-events: none;
+}
+
+.book-cover {
+    position: absolute;
+    top: 2.25rem;
+    bottom: 4rem;
+    z-index: 1;
+    width: 5.5rem;
+    border: 1px solid rgba(197, 160, 89, 0.28);
+    background:
+        linear-gradient(90deg, rgba(197, 160, 89, 0.18), transparent 28%),
+        linear-gradient(180deg, #141018, #07080d 45%, #170d10);
+    box-shadow:
+        inset 0 0 24px rgba(197, 160, 89, 0.12),
+        0 18px 35px rgba(0, 0, 0, 0.55);
+}
+
+.book-cover-left {
+    left: 2rem;
+    border-radius: 14px 4px 4px 14px;
+}
+
+.book-cover-right {
+    right: 2rem;
+    border-radius: 4px 14px 14px 4px;
+    transform: scaleX(-1);
+}
+
+.book-pages {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0.75rem 0.9rem 1rem;
+    border-radius: 8px;
+    background:
+        linear-gradient(90deg, rgba(112, 76, 37, 0.38), transparent 4%, transparent 96%, rgba(112, 76, 37, 0.38)),
+        linear-gradient(180deg, #d4c4a7, #b39d78 50%, #806441);
+    box-shadow:
+        0 24px 42px rgba(0, 0, 0, 0.58),
+        0 0 0 1px rgba(197, 160, 89, 0.24);
+}
+
+.book-page {
+    position: relative;
+    z-index: 2;
+    min-width: 0;
+    min-height: 480px;
+    padding: 0.65rem;
+    background:
+        repeating-linear-gradient(0deg, rgba(75, 51, 27, 0.12) 0 1px, transparent 1px 5px),
+        linear-gradient(90deg, #efe8da, #fffdf7 13%, #f7f1e7 78%, #dfd2bb);
+    box-shadow:
+        inset 0 0 18px rgba(94, 68, 33, 0.16),
+        inset 0 -8px 12px rgba(94, 68, 33, 0.12);
+}
+
+.book-page-left {
+    border-radius: 8px 2px 2px 8px;
+    transform-origin: right center;
+    box-shadow:
+        inset -18px 0 26px rgba(68, 44, 25, 0.2),
+        inset 0 -8px 12px rgba(94, 68, 33, 0.12);
+}
+
+.book-page-right {
+    border-radius: 2px 8px 8px 2px;
+    transform-origin: left center;
+    box-shadow:
+        inset 18px 0 26px rgba(68, 44, 25, 0.2),
+        inset 0 -8px 12px rgba(94, 68, 33, 0.12);
+}
+
+.book-page[hidden] {
+    display: none;
+}
+
+.book-page canvas {
+    position: relative;
+    z-index: 1;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 2px;
+    background: #f6f0e7;
+    box-shadow: 0 1px 4px rgba(75, 51, 27, 0.16);
+}
+
+.book-page::before {
+    content: '';
+    position: absolute;
+    inset: 0.65rem;
+    z-index: 3;
+    border-radius: 2px;
+    opacity: 0;
+    pointer-events: none;
+    transform: scaleX(0);
+    will-change: opacity, transform;
+}
+
+.book-page::after {
+    content: '';
+    position: absolute;
+    inset: 0.65rem;
+    z-index: 2;
+    border-radius: 2px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.book-page-right::after {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.46), transparent 34%, rgba(255, 255, 255, 0.16));
+}
+
+.book-page-left::after {
+    background: linear-gradient(270deg, rgba(0, 0, 0, 0.46), transparent 34%, rgba(255, 255, 255, 0.16));
+}
+
+.book-spine {
+    align-self: stretch;
+    flex: 0 0 30px;
+    min-height: 480px;
+    background:
+        radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.45), transparent 62%),
+        linear-gradient(90deg, rgba(88, 56, 29, 0.18), rgba(0, 0, 0, 0.48), rgba(88, 56, 29, 0.18));
+    box-shadow:
+        inset 8px 0 14px rgba(255, 255, 255, 0.1),
+        inset -8px 0 14px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+.page-turn-zone {
+    position: absolute;
+    z-index: 4;
+    bottom: 0.65rem;
+    width: min(30%, 8rem);
+    height: min(24%, 8rem);
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.page-turn-zone::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 4.5rem;
+    height: 4.5rem;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.page-turn-prev {
+    left: 0.65rem;
+}
+
+.page-turn-next {
+    right: 0.65rem;
+}
+
+.page-turn-prev::before {
+    right: auto;
+    left: 0;
+    background: linear-gradient(225deg, transparent 50%, rgba(197, 160, 89, 0.22) 51%);
+    transform-origin: bottom left;
+}
+
+.page-turn-next::before {
+    background: linear-gradient(135deg, transparent 50%, rgba(197, 160, 89, 0.22) 51%);
+    transform-origin: bottom right;
+}
+
+.page-turn-zone:hover::before,
+.page-turn-zone:focus-visible::before {
+    opacity: 1;
+    transform: scale(1.04);
+}
+
+.page-turn-zone:focus-visible {
+    outline: 1px solid rgba(197, 160, 89, 0.8);
+    outline-offset: -6px;
+}
+
+.page-turn-zone:disabled {
+    cursor: default;
+    pointer-events: none;
+}
+
+.page-turn-zone[hidden] {
+    display: none;
+}
+
+.book-viewer.is-page-turning .book-button,
+.book-viewer.is-page-turning .page-turn-zone,
+.book-viewer.is-page-turning .book-progress {
+    pointer-events: none;
+}
+
+.book-page.is-turning-forward {
+    z-index: 8;
+    animation: page-nudge-forward 280ms ease-out;
+}
+
+.book-page.is-turning-back {
+    z-index: 8;
+    animation: page-nudge-back 280ms ease-out;
+}
+
+.book-page.is-turning-forward::before,
+.book-page.is-turning-back::before {
+    animation: page-sweep 280ms ease-out forwards;
+}
+
+.book-page.is-turning-forward::after,
+.book-page.is-turning-back::after {
+    animation: page-turn-shadow 280ms ease-out forwards;
+}
+
+.book-page.is-turning-forward::before,
+.book-page-right.is-turning-forward::before,
+.book-page-left.is-single-turn.is-turning-forward::before {
+    right: 0.65rem;
+    left: auto;
+    width: calc(100% - 1.3rem);
+    transform-origin: right center;
+    background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.28), transparent 28%),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.42), rgba(233, 219, 190, 0.78) 44%, rgba(121, 87, 47, 0.28));
+}
+
+.book-page.is-turning-back::before,
+.book-page-left.is-turning-back::before {
+    left: 0.65rem;
+    right: auto;
+    width: calc(100% - 1.3rem);
+    transform-origin: left center;
+    background:
+        linear-gradient(270deg, rgba(0, 0, 0, 0.28), transparent 28%),
+        linear-gradient(270deg, rgba(255, 255, 255, 0.42), rgba(233, 219, 190, 0.78) 44%, rgba(121, 87, 47, 0.28));
+}
+
+@keyframes page-nudge-forward {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(0.96); }
+}
+
+@keyframes page-nudge-back {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(0.96); }
+}
+
+@keyframes page-sweep {
+    0% {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    45% {
+        opacity: 0.85;
+    }
+    100% {
+        opacity: 0;
+        transform: scaleX(1);
+    }
+}
+
+@keyframes page-turn-shadow {
+    0% {
+        opacity: 0;
+    }
+    45% {
+        opacity: 0.28;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .book-page.is-turning-forward,
+    .book-page.is-turning-back,
+    .book-page.is-turning-forward::after,
+    .book-page.is-turning-back::after {
+        animation-duration: 1ms;
+    }
+}
+
+.book-status {
+    min-height: 1.5rem;
+    margin-top: 1rem;
+    color: rgba(209, 213, 219, 0.78);
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.08rem;
+    text-align: center;
+}
+
+.book-progress {
+    display: block;
+    width: calc(100% - 2rem);
+    margin: 0.75rem auto 0.25rem;
+    accent-color: var(--old-gold);
+}
+
+.book-viewer.is-loading .book-pages {
+    opacity: 0.55;
+}
+
+/* ========================================
    INFORMACIÓN ADICIONAL
    ======================================== */
 
@@ -316,6 +720,28 @@ body::before {
         height: 70vh;
         min-height: 500px;
     }
+
+    .book-toolbar {
+        flex-wrap: wrap;
+    }
+
+    .book-stage {
+        min-height: 420px;
+        padding: 1rem;
+    }
+
+    .book-pages {
+        gap: 0;
+    }
+
+    .book-page {
+        min-height: 360px;
+        padding: 0.4rem;
+    }
+
+    .book-spine {
+        display: none;
+    }
     
     .libro-container {
         padding: 1rem;
@@ -343,6 +769,36 @@ body::before {
     .fp-iframe {
         height: 60vh;
         min-height: 400px;
+    }
+
+    .book-viewer {
+        padding: 0.5rem;
+    }
+
+    .book-toolbar {
+        gap: 0.5rem;
+        padding: 0.6rem;
+    }
+
+    .book-button {
+        width: 2.25rem;
+        height: 2.25rem;
+        font-size: 1.2rem;
+    }
+
+    .book-page-jump {
+        width: 100%;
+        justify-content: center;
+        order: 3;
+    }
+
+    .book-stage {
+        min-height: 340px;
+        padding: 0.75rem;
+    }
+
+    .book-page {
+        min-height: 300px;
     }
     
     .info-titulo {

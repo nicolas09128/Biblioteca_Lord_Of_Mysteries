@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Lord of Mysteries - Volumen III">
-    <title>Volumen III - La Danza del Caos | Lord of Mysteries</title>
+    <title>Volumen III - Payaso, Parte III | Lord of Mysteries</title>
     <link rel="stylesheet" href="../CSS/libros.css">
 </head>
 <body>
     <!-- HEADER CON NAVEGACIÓN -->
     <header class="header-libro">
         <nav class="nav-container">
-            <a href="../principal.html" class="btn-volver" target="main_frame">
+            <a href="../lord-of-mysteries-volumenes.html" class="btn-volver" target="main_frame">
                 <span>←</span>
                 <span>Volver a la Biblioteca</span>
             </a>
             <h1 class="libro-titulo-header">
                 <span class="titulo-decoracion">✦</span>
-                Volumen III: La Danza del Caos
+                Volumen III: Payaso, Parte III
                 <span class="titulo-decoracion">✦</span>
             </h1>
         </nav>
@@ -25,19 +25,42 @@
 
     <!-- CONTAINER DEL LIBRO -->
     <main class="libro-container">
-        <!-- IFRAME DEL LIBRO -->
-        <div class="iframe-wrapper">
+        <!-- VISOR LOCAL DEL LIBRO -->
+        <div class="iframe-wrapper book-viewer" data-book-viewer data-volume-id="3" data-pdf="pdfs/Lord of the Mysteries 101-150.pdf">
             <span class="corner-decoration top-right">◈</span>
             <span class="corner-decoration bottom-left">◈</span>
             <span class="corner-decoration bottom-right">◈</span>
-            <iframe 
-                allowfullscreen="allowfullscreen" 
-                allow="clipboard-write" 
-                scrolling="no" 
-                class="fp-iframe" 
-                src="https://heyzine.com/flip-book/9a499ec625.html"
-                title="Lord of Mysteries - Volumen III">
-            </iframe>
+            <div class="book-toolbar" aria-label="Controles del libro">
+                <button class="book-button" type="button" data-book-prev aria-label="Pagina anterior">&lsaquo;</button>
+                <label class="book-page-jump">
+                    <span>Pagina</span>
+                    <input type="number" min="1" value="1" data-book-page>
+                    <span data-book-total>/ ...</span>
+                </label>
+                <button class="book-button" type="button" data-book-next aria-label="Pagina siguiente">&rsaquo;</button>
+                <div class="book-zoom" aria-label="Zoom">
+                    <button class="book-button" type="button" data-book-zoom-out aria-label="Reducir zoom">-</button>
+                    <button class="book-button" type="button" data-book-zoom-in aria-label="Aumentar zoom">+</button>
+                </div>
+            </div>
+            <div class="book-stage" aria-live="polite">
+                <div class="book-cover book-cover-left" aria-hidden="true"></div>
+                <div class="book-cover book-cover-right" aria-hidden="true"></div>
+                <div class="book-pages">
+                    <figure class="book-page book-page-left">
+                        <canvas data-page-left></canvas>
+                        <button class="page-turn-zone page-turn-prev" type="button" data-corner-prev aria-label="Pagina anterior"></button>
+                        <button class="page-turn-zone page-turn-next page-turn-next-single" type="button" data-corner-next-single aria-label="Pagina siguiente"></button>
+                    </figure>
+                    <div class="book-spine" aria-hidden="true"></div>
+                    <figure class="book-page book-page-right">
+                        <canvas data-page-right></canvas>
+                        <button class="page-turn-zone page-turn-next" type="button" data-corner-next aria-label="Pagina siguiente"></button>
+                    </figure>
+                </div>
+                <p class="book-status" data-book-status>Cargando libro...</p>
+            </div>
+            <input class="book-progress" type="range" min="1" value="1" data-book-progress aria-label="Progreso del libro">
         </div>
 
         <!-- INFORMACIÓN ADICIONAL -->
@@ -53,5 +76,6 @@
             </p>
         </aside>
     </main>
+    <script type="module" src="../JS/book-viewer.js"></script>
 </body>
 </html>

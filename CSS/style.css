@@ -292,6 +292,32 @@ header::after {
     height: 300px;
 }
 
+.biblioteca-novelas {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    align-items: stretch;
+}
+
+.novela-card {
+    min-height: 360px;
+}
+
+.novela-card .libro-titulo {
+    font-size: 2.25rem;
+}
+
+.novela-card-empty {
+    opacity: 0.52;
+    cursor: default;
+}
+
+.novela-card-empty:hover {
+    transform: none;
+    border-color: rgba(197, 160, 89, 0.2);
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px rgba(197, 160, 89, 0.1);
+}
+
 /* ========================================
    FOOTER - EL SELLO DEL DESTINO
    ======================================== */
