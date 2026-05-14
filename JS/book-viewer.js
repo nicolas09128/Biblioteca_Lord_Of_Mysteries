@@ -85,20 +85,26 @@ if (viewer) {
     const page = await pdf.getPage(pageNumber);
     const shell = viewer.querySelector(".book-pages");
     const availableWidth = isSinglePage()
-      ? shell.clientWidth - 32
+      ? shell.clientWidth
       : (shell.clientWidth - 58) / 2;
     const firstViewport = page.getViewport({ scale: 1 });
-    const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
-    const scale = Math.max(0.5, (availableWidth / firstViewport.width) * zoom);
+    const pixelRatio = isSinglePage()
+      ? Math.min(window.devicePixelRatio || 1, 2.5)
+      : Math.min(window.devicePixelRatio || 1, 1.5);
+    const horizontalCropRatio = 0;
+    const readableWidth = firstViewport.width * (1 - horizontalCropRatio * 2);
+    const scale = Math.max(0.5, (availableWidth / readableWidth) * zoom);
     const viewport = page.getViewport({ scale });
+    const horizontalCrop = viewport.width * horizontalCropRatio;
+    const canvasWidth = viewport.width - horizontalCrop * 2;
     const context = canvas.getContext("2d");
 
-    canvas.width = Math.floor(viewport.width * pixelRatio);
+    canvas.width = Math.floor(canvasWidth * pixelRatio);
     canvas.height = Math.floor(viewport.height * pixelRatio);
-    canvas.style.width = `${Math.floor(viewport.width)}px`;
+    canvas.style.width = `${Math.floor(canvasWidth)}px`;
     canvas.style.height = `${Math.floor(viewport.height)}px`;
 
-    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    context.setTransform(pixelRatio, 0, 0, pixelRatio, -horizontalCrop * pixelRatio, 0);
     const renderTask = page.render({ canvasContext: context, viewport });
     await renderTask.promise;
 
