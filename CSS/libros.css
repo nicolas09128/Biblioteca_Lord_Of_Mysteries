@@ -409,6 +409,15 @@ body::before {
         inset 0 -8px 12px rgba(94, 68, 33, 0.12);
 }
 
+/* El visor usa una página por vez en todos los tamaños de pantalla. */
+.book-viewer.is-single-page .book-page-left {
+    border-radius: 8px;
+    transform-origin: center;
+    box-shadow:
+        inset 0 0 18px rgba(94, 68, 33, 0.16),
+        inset 0 -8px 12px rgba(94, 68, 33, 0.12);
+}
+
 .book-page-right {
     border-radius: 2px 8px 8px 2px;
     transform-origin: left center;

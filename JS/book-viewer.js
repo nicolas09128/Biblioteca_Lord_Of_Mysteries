@@ -41,9 +41,8 @@ if (viewer) {
 
   const pdfUrl = viewer.dataset.pdf;
   const leftCanvas = viewer.querySelector("[data-page-left]");
-  const rightCanvas = viewer.querySelector("[data-page-right]");
   const leftWrap = leftCanvas.closest(".book-page");
-  const rightWrap = rightCanvas.closest(".book-page");
+  const rightWrap = viewer.querySelector(".book-page-right");
   const spine = viewer.querySelector(".book-spine");
   const status = viewer.querySelector("[data-book-status]");
   const progress = viewer.querySelector("[data-book-progress]");
@@ -56,7 +55,6 @@ if (viewer) {
   const cornerPrev = viewer.querySelector("[data-corner-prev]");
   const cornerNext = viewer.querySelector("[data-corner-next]");
   const cornerNextSingle = viewer.querySelector("[data-corner-next-single]");
-  const singlePageQuery = window.matchMedia("(max-width: 800px)");
 
   let pdf = null;
   let currentPage = 1;
@@ -65,8 +63,10 @@ if (viewer) {
   let isAnimating = false;
   let renderQueue = Promise.resolve();
 
-  const isSinglePage = () => singlePageQuery.matches;
-  const step = () => (isSinglePage() ? 1 : 2);
+  // El lector se muestra siempre como una página para priorizar la legibilidad.
+  const step = () => 1;
+
+  viewer.classList.add("is-single-page");
 
   const setStatus = (message) => {
     status.textContent = message;
@@ -78,19 +78,15 @@ if (viewer) {
     }
     const max = pdf.numPages;
     const clamped = Math.min(Math.max(page, 1), max);
-    return isSinglePage() || clamped === 1 ? clamped : clamped % 2 === 0 ? clamped : clamped - 1;
+    return clamped;
   };
 
   const renderPage = async (pageNumber, canvas, token) => {
     const page = await pdf.getPage(pageNumber);
     const shell = viewer.querySelector(".book-pages");
-    const availableWidth = isSinglePage()
-      ? shell.clientWidth
-      : (shell.clientWidth - 58) / 2;
+    const availableWidth = shell.clientWidth;
     const firstViewport = page.getViewport({ scale: 1 });
-    const pixelRatio = isSinglePage()
-      ? Math.min(window.devicePixelRatio || 1, 2.5)
-      : Math.min(window.devicePixelRatio || 1, 1.5);
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2.5);
     const horizontalCropRatio = 0;
     const readableWidth = firstViewport.width * (1 - horizontalCropRatio * 2);
     const scale = Math.max(0.5, (availableWidth / readableWidth) * zoom);
@@ -116,11 +112,7 @@ if (viewer) {
   };
 
   const updateControls = () => {
-    const pagesShown = isSinglePage()
-      ? `${currentPage}`
-      : currentPage === 1 || currentPage === pdf.numPages
-        ? `${currentPage}`
-        : `${currentPage}-${Math.min(currentPage + 1, pdf.numPages)}`;
+    const pagesShown = `${currentPage}`;
 
     pageInput.value = currentPage;
     pageTotal.textContent = `/ ${pdf.numPages}`;
@@ -149,14 +141,9 @@ if (viewer) {
     try {
       await renderPage(currentPage, leftCanvas, token);
 
-      const showRight = !isSinglePage() && currentPage + 1 <= pdf.numPages && currentPage !== 1;
-      rightWrap.hidden = !showRight;
-      spine.hidden = !showRight;
-      cornerNextSingle.hidden = showRight;
-
-      if (showRight) {
-        await renderPage(currentPage + 1, rightCanvas, token);
-      }
+      rightWrap.hidden = true;
+      spine.hidden = true;
+      cornerNextSingle.hidden = false;
 
       if (token === renderToken) {
         updateControls();
@@ -195,7 +182,7 @@ if (viewer) {
 
     const animatedPage = direction > 0 && !rightWrap.hidden ? rightWrap : leftWrap;
     const animationClass = direction > 0 ? "is-turning-forward" : "is-turning-back";
-    const singleTurn = isSinglePage() || rightWrap.hidden;
+    const singleTurn = true;
 
     isAnimating = true;
     animatedPage.classList.toggle("is-single-turn", singleTurn);
