@@ -55,10 +55,13 @@ if (viewer) {
   const cornerPrev = viewer.querySelector("[data-corner-prev]");
   const cornerNext = viewer.querySelector("[data-corner-next]");
   const cornerNextSingle = viewer.querySelector("[data-corner-next-single]");
+  const compactViewportQuery = window.matchMedia("(max-width: 768px)");
 
   let pdf = null;
   let currentPage = 1;
-  let zoom = 1;
+  // En móviles se parte de una escala de lectura cómoda. Se puede ampliar
+  // todavía más con el botón +.
+  let zoom = compactViewportQuery.matches ? 1.5 : 1;
   let renderToken = 0;
   let isAnimating = false;
   let renderQueue = Promise.resolve();
@@ -84,7 +87,11 @@ if (viewer) {
   const renderPage = async (pageNumber, canvas, token) => {
     const page = await pdf.getPage(pageNumber);
     const shell = viewer.querySelector(".book-pages");
-    const availableWidth = shell.clientWidth;
+    const stage = viewer.querySelector(".book-stage");
+    // Al ampliar en móvil, el contenedor puede crecer para permitir el
+    // desplazamiento horizontal. El ancho de referencia debe seguir siendo
+    // el de la pantalla para no ampliar de nuevo en cada renderizado.
+    const availableWidth = Math.min(shell.clientWidth, stage.clientWidth);
     const firstViewport = page.getViewport({ scale: 1 });
     const pixelRatio = Math.min(window.devicePixelRatio || 1, 2.5);
     const horizontalCropRatio = 0;
@@ -108,6 +115,12 @@ if (viewer) {
       return;
     }
 
+    // Cada página nueva empieza desde el margen de lectura, evitando que una
+    // posición horizontal previa la deje visualmente desplazada en móvil.
+    if (compactViewportQuery.matches) {
+      stage.scrollLeft = 0;
+    }
+
     canvas.dataset.pageNumber = pageNumber;
   };
 
@@ -124,7 +137,7 @@ if (viewer) {
     cornerNext.disabled = currentPage >= pdf.numPages;
     cornerNextSingle.disabled = currentPage >= pdf.numPages;
     zoomOutButton.disabled = zoom <= 0.75;
-    zoomInButton.disabled = zoom >= 1.5;
+    zoomInButton.disabled = zoom >= (compactViewportQuery.matches ? 2 : 1.5);
     setStatus(`Pagina ${pagesShown} de ${pdf.numPages}`);
   };
 
@@ -208,7 +221,8 @@ if (viewer) {
     renderSpread();
   });
   zoomInButton.addEventListener("click", () => {
-    zoom = Math.min(1.5, Math.round((zoom + 0.1) * 10) / 10);
+    const maxZoom = compactViewportQuery.matches ? 2 : 1.5;
+    zoom = Math.min(maxZoom, Math.round((zoom + 0.1) * 10) / 10);
     renderSpread();
   });
   progress.addEventListener("input", (event) => goToPage(Number(event.target.value)));
